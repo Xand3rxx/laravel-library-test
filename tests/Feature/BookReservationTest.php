@@ -67,6 +67,9 @@ class BookReservationTest extends TestCase
      */
     public function can_update_book_record()
     {
+        // Disable exception handling
+        $this->withoutExceptionHandling();
+
         $this->post('/books', [
             'title'     => 'Laravel PHP Framework',
             'author'    => 'Taylor Otwell'
@@ -74,12 +77,12 @@ class BookReservationTest extends TestCase
 
         $book = Book::first();
 
-        $response = $this->patch('\/books/' .$book['id'], [
+        $response = $this->patch('/books/' .$book['id'], [
             'title'     => 'Tips for writing clean code in Laravel',
             'author'    => 'Josh Thackeray'
         ]);
 
-        $this->assertEquals('Tips for writing clean code in Laravel', $book['title']);
-        $this->assertEquals('Josh Thackeray', $book['author']);
+        $this->assertEquals('Tips for writing clean code in Laravel', Book::first()->title);
+        $this->assertEquals('Josh Thackeray', Book::first()->author);
     }
 }
