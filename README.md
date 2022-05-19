@@ -27,8 +27,8 @@ Automated tests are simple: they just execute portions of your code for you and 
 
 4. Inside the `phpunit.xml` create or uncomment:
 
-    - <env name="DB_CONNECTION" value="sqlite"/>
-    - <env name="DB_DATABASE" value=":memory:"/>
+    - `<env name="DB_CONNECTION" value="sqlite"/>`
+    - `<env name="DB_DATABASE" value=":memory:"/>`
 
 5. Run `composer install`.
 
