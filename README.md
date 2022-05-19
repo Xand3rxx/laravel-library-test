@@ -59,7 +59,9 @@ Automated tests are simple: they just execute portions of your code for you and 
 ```
 
 ## Test Result
-<span style="color:blue">some *blue* text</span>
+<span style="color:green;font-weight:700;font-size:20px">
+    markdown color font styles
+</span>
 ```
    <span style="color:blue">*PASS*</span>  Tests\Unit\ExampleTest
   ✓ that true is true
