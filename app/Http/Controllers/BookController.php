@@ -15,7 +15,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        return Book::all();
+        return redirect('/books/')->with(['books' => Book::all()]);
     }
 
     /**
@@ -37,7 +37,9 @@ class BookController extends Controller
     public function store(BookRequest $request)
     {
         // Retrieve the validated input data and create book record.
-        return (Book::create($request->validated()));
+        return ($book = Book::create($request->validated()))
+            ? redirect($book->path())
+            : back();
     }
 
     /**
@@ -48,7 +50,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-
+        return redirect($book->path());
     }
 
     /**
@@ -59,7 +61,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return redirect($book->path());
     }
 
     /**
@@ -72,7 +74,9 @@ class BookController extends Controller
     public function update(BookRequest $request, Book $book)
     {
         // Retrieve the validated input data and update book record.
-        return ($book->update($request->validated()));
+        return ($book->update($request->validated()))
+            ? redirect($book->path())
+            : back();
     }
 
     /**
@@ -83,6 +87,8 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        return ($book->delete())
+            ? redirect('/books/')
+            : back();
     }
 }
