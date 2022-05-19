@@ -52,8 +52,8 @@ class BookReservationTest extends TestCase
     public function can_create_book_record()
     {
         $response = $this->post('/books', [
-            'title'     => 'How to make money',
-            'author'    => 'John Doe'
+            'title'     => 'Laravel PHP Framework',
+            'author'    => 'Taylor Otwell'
         ]);
 
         $response->assertStatus(201);
