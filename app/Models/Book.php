@@ -17,4 +17,21 @@ class Book extends Model
         // return '/books/' . $this->id.'-'.Str::slug($this->title);
         return '/books/' . $this->id;
     }
+
+    public function setAuthorIdAttribute($author)
+    {
+        $this->attributes['author_id'] = (Author::firstOrCreate([
+            'name'      => $author,
+            'country'   => 'USA',
+            'dob'       => '05/14/1988'
+        ]))->id;
+    }
+
+    /**
+     * Get the author who created a member
+     */
+    public function author()
+    {
+        return $this->belongsTo(Author::class, 'id', 'author_id');
+    }
 }

@@ -31,14 +31,14 @@ class BookRequest extends FormRequest
 
             return [
                 'title'     => ['bail', 'required', 'string', Rule::unique('books', 'title')->ignore($book['id'])],
-                'author'    => 'bail|required|string'
+                'author_id' => 'bail|required'
             ];
         }
 
         // Execute the validation if the request method is POST
         return [
             'title'     => 'bail|required|string|unique:books,title',
-            'author'    => 'bail|required|string'
+            'author_id' => 'bail|required'
         ];
     }
 }
