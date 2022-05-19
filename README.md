@@ -59,14 +59,12 @@ Automated tests are simple: they just execute portions of your code for you and 
 ```
 
 ## Test Result
-<span style="color:green;font-weight:700;font-size:20px">
-    markdown color font styles
-</span>
+
 ```
-   <span style="color:blue">*PASS*</span>  Tests\Unit\ExampleTest
+   PASS  Tests\Unit\ExampleTest
   ✓ that true is true
 
-   <span style="color:blue">*PASS*</span>  Tests\Feature\BookReservationTest
+   PASS  Tests\Feature\BookReservationTest
   ✓ book title is required
   ✓ book author is required
   ✓ can create book record
