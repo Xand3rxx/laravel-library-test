@@ -24,3 +24,6 @@ Route::resource('books', BookController::class);
 
 // All Authors route
 Route::resource('authors', AuthorController::class);
+
+// All Reservation route
+Route::resource('reservations', ReservationController::class);

@@ -7,7 +7,7 @@ use App\Models\Book;
 use App\Models\Author;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class BookReservationTest extends TestCase
+class BookManagementTest extends TestCase
 {
     use RefreshDatabase;
 
