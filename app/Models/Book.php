@@ -34,7 +34,7 @@ class Book extends Model
 
         // Find where librarian id, borrower id, and book id is not checked in
         $reservation = \App\Models\Reservation::where([
-        // $reservation = $bookInstance->reservations()->where([
+            // $reservation = $bookInstance->reservations()->where([
             'user_id'           => $user['id'],
             'borrower_id'       => $borrower['id'],
             'book_id'           => $book['id'],
@@ -42,7 +42,8 @@ class Book extends Model
             ->whereNull('checked_in_time')
             ->first();
 
-        if(is_null($reservation)){
+        // Check if reservation was initially created for this book
+        if (is_null($reservation)) {
             throw new \Exception();
         }
 
