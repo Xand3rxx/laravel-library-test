@@ -24,11 +24,11 @@ class ReservationRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'           => 'bail|required',
-            'borrower_id'       => 'bail|required',
-            'book_id'           => 'bail|required',
-            'checked_out_time'  => 'bail|required|date|time',
-            'checked_in_time'   => 'sometimes|date|time',
+            'user_id'           => 'bail|required|numeric',
+            'borrower_id'       => 'bail|required|numeric',
+            'book_id'           => 'bail|required|numeric',
+            'checked_out_time'  => 'bail|required|date',
+            'checked_in_time'   => 'sometimes|date|nullable',
         ];
     }
 }

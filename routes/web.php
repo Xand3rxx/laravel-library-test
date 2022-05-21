@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +28,8 @@ Route::resource('books', BookController::class);
 Route::resource('authors', AuthorController::class);
 
 // All Reservation route
-Route::resource('reservations', ReservationController::class);
+Route::resource('reservations', ReservationController::class)->middleware('auth');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
