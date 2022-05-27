@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -49,18 +50,18 @@ class BookCheckoutTest extends TestCase
         $this->assertCount(0, Reservation::all());
     }
 
-    // /**
-    //  * A test to assertain that a book id exost in the database
-    //  * @test
-    //  * @return voidd
-    //  */
-    // public function book_id_exists()
-    // {
-    //     $this->get('/books/', ['124'])
-    //     ->assertStatus(404);
+    /**
+     * A test to assertain that a book id exist in the database before reservation
+     * @test
+     * @return voidd
+     */
+    public function book_id_exists()
+    {
+        $this->get('/books/124')
+            ->assertStatus(404);
 
-    //     $this->assertCount(0, Reservation::all());
-    // }
+        $this->assertCount(0, Reservation::all());
+    }
 
     /**
      * A test to assertain that a book can be checked in by an authenticated user.
@@ -70,21 +71,17 @@ class BookCheckoutTest extends TestCase
      */
     public function authenticated_user_can_checkin_book()
     {
-        // Disable exception handling
-        $this->withoutExceptionHandling();
-
         // Create reaervation record
         $this->actingAs($this->data()['user'], 'web')->post('/reservations', $data = $this->data());
 
+        // First reservation record
         $reservation =  Reservation::first();
 
         // Update reservation record
-        $com = $this->actingAs($data['user'], 'web')->patch($reservation->path(), array_merge((array) $data, ['checked_in_time' => now()]));
-        // $reservation->update(['checked_in_time' => now()]);
+        $this->actingAs($data['user'], 'web')->patch($reservation->path(), array_merge($data, ['checked_in_time' => now()]));
 
         // New first reservation record
-        // $reservation =  $reservation->fresh();
-        // dd($reservation);
+        $reservation =  $reservation->fresh();
 
         $this->assertCount(1, Reservation::all());
         $this->assertEquals($data['user_id'], $reservation['user_id']);
@@ -94,10 +91,30 @@ class BookCheckoutTest extends TestCase
         $this->assertEquals(now(), $reservation['checked_in_time']);
     }
 
+    /**
+     * A test to assertain that a book can only be checked in by an authenticated user.
+     * @test
+     * @return void
+     */
+    public function only_authenticated_user_can_checkin_book()
+    {
+        // Create reaervation record
+        $this->actingAs($this->data()['user'], 'web')->post('/reservations', $data = $this->data());
+
+        Auth::logout();
+
+        $this->post('/reservations', $this->data())
+            ->assertRedirect('/login');
+
+        // First reservation record
+        $reservation =  Reservation::all();
+
+        $this->assertCount(1, $reservation);
+        $this->assertNull($reservation->first()->checked_in_time);
+    }
+
     private function data()
     {
-        // dd($book);
-
         // Create book record with factory
         $book = Book::factory()->create();
 

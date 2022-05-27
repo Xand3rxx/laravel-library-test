@@ -57,10 +57,11 @@ class ReservationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  \App\Http\Requests\ReservationRequest  $request
      * @param  \App\Models\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Reservation $reservation)
+    public function edit(ReservationRequest $reservation)
     {
         //
     }
@@ -68,13 +69,16 @@ class ReservationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ReservationRequest  $request
      * @param  \App\Models\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Reservation $reservation)
+    public function update(ReservationRequest $request, Reservation $reservation)
     {
-        //
+        // Retrieve the validated input data and update reservation record.
+        return ($reservation->update($request->validated()))
+            ? redirect($reservation->path())
+            : back();
     }
 
     /**

@@ -85,9 +85,6 @@ class BookManagementTest extends TestCase
             'author_id' => 'Josh Thackeray'
         ]);
 
-        // dd($response);
-
-
         // Check if updated book title and author equals initial book record
         $this->assertEquals('Tips for writing clean code in Laravel', $book->fresh()->title);
         $this->assertEquals(2, $book->fresh()->author_id);
