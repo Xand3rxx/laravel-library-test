@@ -18,7 +18,9 @@ use App\Http\Controllers\ReservationController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('authors.index', [
+        'authors' => \App\Models\Author::latest()->get()
+    ]);
 });
 
 // All Books route

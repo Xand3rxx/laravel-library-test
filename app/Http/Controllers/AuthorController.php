@@ -15,7 +15,10 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        return redirect('/authors/')->with(['authors' => Author::all()]);
+        // return redirect('/authors/')->with(['authors' => Author::all()]);
+        return view('authors.index', [
+            'authors' => Author::latest()->get()
+        ]);
     }
 
     /**
@@ -25,7 +28,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
     /**
@@ -50,7 +53,7 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
-        //
+        return view('authors.show', compact('author'));
     }
 
     /**
