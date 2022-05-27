@@ -23,11 +23,7 @@ class AuthorManagementTest extends TestCase
         $this->withoutExceptionHandling();
 
         // Execute create author record
-        $response = $this->post('/authors', [
-            'name'      => 'Taylor Otwell',
-            'country'   => 'USA',
-            'dob'       => '05/14/1988'
-        ]);
+        $response = $this->post('/authors', $this->data());
 
         // Check if authors table has at least one author record
         $author = Author::all();
@@ -42,5 +38,50 @@ class AuthorManagementTest extends TestCase
 
         // Redirect to book show page
         $response->assertRedirect($author->first()->path());
+    }
+
+    /**
+     * A test to determine if author name is provided.
+     * @test
+     * @return void
+     */
+    public function name_of_author_is_required()
+    {
+        $response = $this->post('/authors', array_merge($this->data(), ['name' => '']));
+
+        $response->assertSessionHasErrors('name');
+    }
+
+    /**
+     * A test to determine if author country is provided.
+     * @test
+     * @return void
+     */
+    public function country_of_author_is_required()
+    {
+        $response = $this->post('/authors', array_merge($this->data(), ['country' => '']));
+
+        $response->assertSessionHasErrors('country');
+    }
+
+    /**
+     * A test to determine if author date of birth is provided.
+     * @test
+     * @return void
+     */
+    public function dob_of_author_is_required()
+    {
+        $response = $this->post('/authors', array_merge($this->data(), ['dob' => '']));
+
+        $response->assertSessionHasErrors('dob');
+    }
+
+    private function data()
+    {
+        return [
+            'name'      => 'Taylor Otwell',
+            'country'   => 'USA',
+            'dob'       => '05/14/1988'
+        ];
     }
 }
